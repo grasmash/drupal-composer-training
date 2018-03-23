@@ -1,4 +1,5 @@
 ## Agenda
+{:.no_toc}
 
 {:toc}
   
