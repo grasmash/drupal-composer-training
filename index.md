@@ -5,11 +5,11 @@
     1. Check System Requirements
     1. Install Composer
     1. Take Composer for a test drive without Drupal
-      1. Create a new project
-      1. Create a PHP script
-      1. Initialize Composer
-      1. Require a new dependency
-      1. Implement the dependency
+        1. Create a new project
+        1. Create a PHP script
+        1. Initialize Composer
+        1. Require a new dependency
+        1. Implement the dependency
 - (slides) Review of Composer anatomy
 - (slides) Semantic Versioning and Constraints
 - (hands-on) Create a new Drupal project with Composer
