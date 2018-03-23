@@ -6,6 +6,8 @@
 
 ## (slides) What is Composer?
 
+@todo link to slides
+
 ## (hands-on) Test Drive
 
 ### Check System Requirements
@@ -76,7 +78,11 @@ rm -rf my-new-project
 
 ## (slides) Review of Composer anatomy
 
+@todo link to slides
+
 ## (slides) Semantic Versioning and Constraints
+
+@todo link to slides
 
 ## (hands-on) Create a new Drupal project with Composer
 
@@ -87,6 +93,8 @@ cd my-project
 
 ## (slides) Drupal-specific Composer config
 
+@todo link to slides
+
 ## (hands-on) Require and update Drupal dependencies
 
 ### Require a module
@@ -96,8 +104,12 @@ cd my-project
 
 ## (slides) Deploying to hosting env
 
+@todo link to slides
+
 ## (slides) Advanced scenarios
 
-### Front end libraries
-### Custom install locations
-### Custom modules and merge plugin
+@todo link to slides
+
+- Front end libraries
+- Custom install locations
+- Custom modules and merge plugin
