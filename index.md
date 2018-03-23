@@ -3,8 +3,10 @@
 
 * TOC
 {:toc}
-  
-## Test Drive
+
+## (slides) What is Composer?
+
+## (hands-on) Test Drive
 
 ### Check System Requirements
 
