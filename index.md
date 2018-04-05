@@ -4,11 +4,6 @@
 * TOC
 {:toc}
 
-## (slides) What is Composer?
-
-@todo link to slides
-
-## (hands-on) Test Drive
 
 ### Check System Requirements
 
@@ -76,40 +71,15 @@ cd ..
 rm -rf my-new-project 
 ```
 
-## (slides) Review of Composer anatomy
-
-@todo link to slides
-
-## (slides) Semantic Versioning and Constraints
-
-@todo link to slides
-
-## (hands-on) Create a new Drupal project with Composer
+## Create a new Drupal project with Composer
 
 ```
 composer create-project drupal-composer/drupal-project:8.x-dev my-project --stability dev --no-interaction
 cd my-project
 ```
-
-## (slides) Drupal-specific Composer config
-
-@todo link to slides
-
-## (hands-on) Require and update Drupal dependencies
+## Require and update Drupal dependencies
 
 ### Require a module
 ### Require a theme
 ### Update core to dev version
 ### Patch something! 
-
-## (slides) Deploying to hosting env
-
-@todo link to slides
-
-## (slides) Advanced scenarios
-
-@todo link to slides
-
-- Front end libraries
-- Custom install locations
-- Custom modules and merge plugin
