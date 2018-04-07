@@ -14,7 +14,7 @@ We strongly suggest that you use OSX or Linux OS. Windows users, please consider
 
 Follow the instructions below, or follow the [Composer installation instructions](https://getcomposer.org/doc/00-intro.md#system-requirements) and return here when you’re finished.
 
-If you’re a homebrew user on OSX, you can use `brew install composer`. Otherwise, execute the following on your command line:
+If you’re a [Homebrew](https://brew.sh) user on OSX, you can use `brew install composer`. Otherwise, execute the following on your command line:
 
 ```
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -46,17 +46,34 @@ touch index.php
 
 ### Initialize Composer
 
+Run the command:
+
 ```
 composer init
 ```
 
+And you will be prompted for a few settings for your new project:
+
+  - Enter a description like 'Test project at DrupalCon'
+  - Enter `project` for Package Type.
+  - Use defaults (hit enter when prompted) for everything else.
+  - When it asks about defining dependencies, answer `no`.
+
+Once you confirm the composer project initialization, you'll see a new `composer.json` file in the folder, containing the project information you just entered.
+
 ### Require a new dependency
+
+Your project doesn't do anything yet, so let's add a dependency so we can start doing something productive! Use `composer require` to add a new dependency.
 
 ```
 composer require monolog/monolog
 ```
 
+[Monolog](https://seldaek.github.io/monolog/) is a logging library for PHP that uses the standard PSR-3 logging interface. Basically, it makes logging things easy!
+
 #### Implement the dependency
+
+Using Monolog is easy; add the following lines of code to the `index.php` file you created earlier:
 
 ```php
 <?php
@@ -75,19 +92,27 @@ $log->pushHandler(new StreamHandler(__DIR__ . "/example.log", Logger::WARNING));
 $log->error('Goodbye world!');
 ```
 
+Save the file, and run it on the command line:
+
 ```
 php -f index.php
 ```
+
+The script should execute very quickly, and afterwards, there should be a new `example.log` file in your project's directory. Let's look at what's inside:
 
 ```
 $ cat example.log
 [2018-03-25 12:05:00] example-log.ERROR: Goodbye world! [] []
 ```
 
+Once you're done with this simple project, clean up your project if you don't want it for future reference:
+
 ```
 cd ..
 rm -rf my-new-project
 ```
+
+That's it! You've already started using Composer to make features in your PHP applications easier to implement!
 
 ## Try basic Composer commands
 
