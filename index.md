@@ -116,14 +116,41 @@ That's it! You've already started using Composer to make features in your PHP ap
 
 ## Try basic Composer commands
 
+Now that you have your feet wet, let's explore a few more commands that can helpful when learning or exploring Composer.
+
 ```
 composer
 composer list
-composer info monolog/monolog
-composer why monolog/monolog
-composer browse monolog/monolog
-composer validate
 ```
+
+These two commands list out Composer's help, along with a list of all the available Composer commands on your system. Note if you have extra composer `scripts` defined in your project, they will be listed alongside the other available commands.
+
+You can use other commands to explore Composer dependencies:
+
+```
+composer info monolog/monolog
+```
+
+For any dependency used in your current project, `composer info` lists out all the information, including metadata, requirements, and suggestions.
+
+```
+composer why monolog/monolog
+```
+
+`composer why` (an alias for `composer depends`) gives a concise description of why a certain dependency is used. For example, in our test project, we can see the project directly requires monolog:
+
+```
+$ composer why monolog/monolog
+jgeerling/my-new-project  -  requires  monolog/monolog (^1.23)
+```
+
+When you want to start using a library, you might want to look up documentation, or get support. To do that, you could go search on Google for documentation, but it's even faster to go straight to the library's website using `composer browse`:
+
+```
+composer browse monolog/monolog
+```
+
+This will open up a browser window to the project's home page.
 
 ## Create a new Drupal project with Composer
 
@@ -131,6 +158,7 @@ composer validate
 composer create-project drupal-composer/drupal-project:8.x-dev my-project --stability dev --no-interaction
 cd my-project
 ```
+
 ## Require and update Drupal dependencies
 
 ### Require a module
