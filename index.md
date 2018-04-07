@@ -4,14 +4,13 @@
 * TOC
 {:toc}
 
-
-### Check System Requirements
+## Check System Requirements
 
 * PHP 5.3.2+
 
 We strongly suggest that you use OSX or Linux OS. Windows users, please consider using [Drupal VM](https://www.drupalvm.com/).
 
-### Install Composer
+## Install Composer
 
 Follow the instructions below, or follow the [Composer installation instructions](https://getcomposer.org/doc/00-intro.md#system-requirements) and return here when you’re finished.
 
@@ -33,9 +32,9 @@ mv composer.phar /usr/local/bin/composer
 
 If that did not work, follow the more detailed [Composer installation instructions](https://getcomposer.org/doc/00-intro.md#system-requirements) and return here when you’re finished.
 
-### Take Composer for a test drive without Drupal
+## Take Composer for a test drive without Drupal
 
-#### Create a new project
+### Create a new project
 
 ```
 mkdir my-new-project
@@ -43,22 +42,21 @@ cd my-new-project
 touch index.php
 ```
 
-#### Create a PHP script
+### Create a PHP script
 
-#### Initialize Composer
+### Initialize Composer
 
 ```
 composer init
 ```
 
-#### Require a new dependency
+### Require a new dependency
 
 ```
 composer require monolog/monolog
 ```
 
 #### Implement the dependency
-
 
 ```php
 <?php
@@ -88,7 +86,7 @@ $ cat example.log
 
 ```
 cd ..
-rm -rf my-new-project 
+rm -rf my-new-project
 ```
 
 ## Try basic Composer commands
@@ -128,7 +126,7 @@ composer require drupal/bootstrap
 composer require squizlabs/php_codesniffer --dev
 ```
 
-### Execute project binaries
+## Execute project binaries
 
 ```
 ./vendor/bin/drush status
@@ -136,13 +134,13 @@ composer require squizlabs/php_codesniffer --dev
 ./vendor/bin/phpcs
 ```
 
-### Update core to dev version
+## Update core to dev version
 
 ```
 composer require drupal/core:8.6.x-dev
 ```
 
-### Patch something! 
+## Patch something!
 
 ```
 "extra" {
@@ -152,6 +150,8 @@ composer require drupal/core:8.6.x-dev
       }
 }
 ```
+
+## Update Drupal Core
 
 Execute:
 ```
