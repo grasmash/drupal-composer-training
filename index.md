@@ -221,15 +221,47 @@ The version constraint `^1.1` here tells Composer: Install any version of Token 
 
 ### Require a theme
 
+Themes work much the same as modules; you just require the theme by name like you would a module:
+
 ```
 composer require drupal/bootstrap
 ```
 
+> If you're running the Drupal site locally, you can log in and go to the 'Appearance' section in the Drupal admin, and click on 'Install and set as default' under the Bootstrap theme to start using it.
+
 ### Require a dev dependency
+
+There are some things you might want to add which are helpful for _developing_ your website, but aren't necessary (and shouldn't even be installed!) on your production website. For example, many people use [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) to help check their PHP code against a set of common coding standards.
+
+To install PHP CodeSniffer—but only in your local development copy of the codebase—require the library and pass the `--dev` flag, like so:
 
 ```
 composer require squizlabs/php_codesniffer --dev
 ```
+
+After Composer is finished adding PHP CodeSniffer, look inside `composer.json`; you'll see that it appears under the `require-dev` section, and not under `require` like most of the other dependencies:
+
+```
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^2.8"
+    },
+```
+
+> Warning: You might have gotten the message `Your requirements could not be resolved to an installable set of packages.` when you run this command, and Composer might have errored and reverted `composer.json` to its original content. If this happened, it's likely due to some other package (usually `drupal/coder`) causing a _dependency conflict_. Congratulations! You can troubleshoot this dependency conflict using the guide later if you'd like—usually you just have to provide a version constraint that fits within the conflict's restrictions, e.g. `composer require squizlabs/php_codesniffer:^2.8 --dev`.
+
+> Note: If you added Drupal VM to your project earlier, you'll notice it is also in the `require-dev` section, since it was required with the `--dev` flag.
+
+At this point, you can use PHP CodeSniffer to test some code against the Drupal coding standards:
+
+  1. Register the Drupal coder module's Drupal coding standards with `phpcs`:
+
+       ./vendor/bin/phpcs --config-set installed_paths ../../drupal/coder/coder_sniffer
+
+  1. Sniff the Token module code, which we added to our codebase earlier:
+
+       ./vendor/bin/phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md ./web/modules/contrib/token
+
+Once PHP CodeSniffer is finished, you should see a report of all the errors found throughout the module. Development tools like PHP CodeSniffer can be very useful in evaluating code quality and fixing problems before you commit them to your codebase!
 
 ## Execute project binaries
 
