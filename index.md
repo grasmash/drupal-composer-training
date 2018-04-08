@@ -184,7 +184,14 @@ This process will take a while; you'll notice it installs a large number of depe
 
 Once your codebase is complete, it's a good idea to install some of the Drupal modules, themes, and tools that will complete your site.
 
-> TODO: Notes or quick guide to adding a VM or Docker setup as a Composer dependency/plugin and run the site locally? Maybe create a quick Composer plugin just for this purpose, e.g. a Drupal VM Docker plugin that lets you just `docker-compose up` after adding/running it?
+> **Want to test this Drupal project locally?**
+> 
+> If you want to run the Drupal project you just created locally, follow these steps:
+> 
+>   1. Install [Docker CE](https://store.docker.com/search?type=edition&offering=community).
+>   1. Add a copy of Drupal VM to your project: `composer require --dev geerlingguy/drupal-vm-docker`
+>   1. Run the local environment: `docker-compose up -d`
+>   1. Access http://localhost/, and you should be able to install your new Drupal site (use database name, username, password of `drupal`)!
 
 ## Require and update Drupal dependencies
 
@@ -204,7 +211,7 @@ If you do this, you'll see an entry added to the `require` section of your `comp
         "drupal/token": "^1.1",
 ```
 
-Basically, Composer looked up the Token project on Drupal.org's Packagist, found that the latest stable version is `1.1` (corresponding to `8.x-1.1`), and then automatically set the _version constraint_ for the module to `^1.1`.
+Basically, Composer looked up the Token project on Drupal.org's Packagist, found that the latest stable version is `1.1` (corresponding to `8.x-1.1`), and then automatically set the _version constraint_ for the module to `^1.1`. Composer also downloaded the Token module, and placed it inside the `modules` directory in your site's document root (the `web/modules` folder) so it can be used by Drupal.
 
 #### Version constraints
 
