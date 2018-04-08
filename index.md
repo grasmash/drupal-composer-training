@@ -1,4 +1,7 @@
 ## Agenda
+
+This hands-on guide to using Composer with Drupal was originally created for the DrupalCon Nashville session [How to build a Drupal site with Composer AND keep all of your hair](https://events.drupal.org/nashville2018/sessions/how-build-drupal-site-composer-and-keep-all-your-hair), presented by [Matthew Grasmick](http://matthewgrasmick.com) and [Jeff Geerling](https://www.jeffgeerling.com) on Wednesday, April 11, 2018.
+
 {:.no_toc}
 
 * TOC
@@ -141,7 +144,7 @@ composer why monolog/monolog
 
 ```
 $ composer why monolog/monolog
-jgeerling/my-new-project  -  requires  monolog/monolog (^1.23)
+myusername/my-new-project  -  requires  monolog/monolog (^1.23)
 ```
 
 When you want to start using a library, you might want to look up documentation, or get support. To do that, you could go search on Google for documentation, but it's even faster to go straight to the library's website using `composer browse`:
