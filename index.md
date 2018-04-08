@@ -163,20 +163,54 @@ composer browse monolog/monolog
 
 This will open up a browser window to the project's home page.
 
+```
+composer outdated
+```
+
+Finally, this handy command will look at all the packages used in your project, and check if any updates are available. If there are none, it won't output anything.
+
 ## Create a new Drupal project with Composer
+
+Drupal requires a bit of extra scaffolding and setup to be able to more easily manage your Drupal project with Composer, so we're going to use the most popular method of building a new Drupal codebase, the [Composer Template for Drupal projects](https://github.com/drupal-composer/drupal-project).
+
+Following the directions from that project's README, create a new Drupal project using Composer:
 
 ```
 composer create-project drupal-composer/drupal-project:8.x-dev my-project --stability dev --no-interaction
 cd my-project
 ```
 
+This process will take a while; you'll notice it installs a large number of dependencies, most of which are required by Drupal itself, but a few others will help you in managing your Drupal codebase with Composer (like [cweagans/composer-patches](https://github.com/cweagans/composer-patches), a library that lets you easily manage patches to Drupal core and contrib projects!).
+
+Once your codebase is complete, it's a good idea to install some of the Drupal modules, themes, and tools that will complete your site.
+
+> TODO: Notes or quick guide to adding a VM or Docker setup as a Composer dependency/plugin and run the site locally? Maybe create a quick Composer plugin just for this purpose, e.g. a Drupal VM Docker plugin that lets you just `docker-compose up` after adding/running it?
+
 ## Require and update Drupal dependencies
 
 ### Require a module
 
+Almost every Drupal site requires a few additional modules to provide much-needed functionality. One of the most popular Drupal modules is the [Token](https://www.drupal.org/project/token) module, which provides many tokens you can use around your Drupal site.
+
+You can install the latest version with:
+
 ```
 composer require drupal/token
 ```
+
+If you do this, you'll see an entry added to the `require` section of your `composer.json` file like:
+
+```
+        "drupal/token": "^1.1",
+```
+
+Basically, Composer looked up the Token project on Drupal.org's Packagist, found that the latest stable version is `1.1` (corresponding to `8.x-1.1`), and then automatically set the _version constraint_ for the module to `^1.1`.
+
+#### Version constraints
+
+The version constraint `^1.1` here tells Composer: Install any version of Token 8.x-1.0 or later, up to _but not including_ Token 8.x-2.0. Refer to our earlier discussion about versions and Composer.
+
+> **Note**: You could also specify an exact version, e.g. `drupal/token:1.1`, and Composer will keep the project pinned to that version no matter what. This isn't necessarily the _best practice_ for Composer, but many projects and teams prefer to manage _Drupal_ dependencies this way, especially if they rely on Drupal's own update mechanisms (instead of using `composer outdated`) to warn when there are new releases.
 
 ### Require a theme
 
