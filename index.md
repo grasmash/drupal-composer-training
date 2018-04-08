@@ -64,6 +64,14 @@ And you will be prompted for a few settings for your new project:
 
 Once you confirm the composer project initialization, you'll see a new `composer.json` file in the folder, containing the project information you just entered.
 
+It's also a good idea to tell Composer you prefer to use _stable_ versions of projects, instead of whatever's latest. So let's explicitly tell Composer:
+
+```
+composer config prefer-stable true
+```
+
+There are [many other Composer config options](https://getcomposer.org/doc/06-config.md) you could set, but for the rest of them, the defaults are fine.
+
 ### Require a new dependency
 
 Your project doesn't do anything yet, so let's add a dependency so we can start doing something productive! Use `composer require` to add a new dependency.
