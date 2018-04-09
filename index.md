@@ -17,7 +17,7 @@ We strongly suggest that you use macOS or Linux. Windows users, please [use thes
 
 Follow the instructions below, or follow the [Composer installation instructions](https://getcomposer.org/doc/00-intro.md#system-requirements) and return here when you’re finished.
 
-If you’re a [Homebrew](https://brew.sh) user on macOS, you can use `brew install composer`. Otherwise, execute the following on your command line:
+If you’re a [Homebrew](https://brew.sh) user on macOS, you can use `brew install composer`. If you're on Windows, you can use the Windows installer. Otherwise, execute the following on your command line:
 
 ```
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -249,7 +249,7 @@ After Composer is finished adding PHP CodeSniffer, look inside `composer.json`; 
     },
 ```
 
-> **Warning**: You might have gotten the message `Your requirements could not be resolved to an installable set of packages.` when you run this command, and Composer might have errored and reverted `composer.json` to its original content. If this happened, it's likely due to some other package (usually `drupal/coder`) causing a _dependency conflict_. Congratulations! You can troubleshoot this dependency conflict using the guide later if you'd like—usually you just have to provide a version constraint that fits within the conflict's restrictions, e.g. `composer require squizlabs/php_codesniffer:^2.8 --dev`.
+> **Warning**: You might have gotten the message `Your requirements could not be resolved to an installable set of packages.` when you run this command, and Composer might have errored and reverted `composer.json` to its original content. If this happened, it's likely due to some other package (usually `drupal/coder`) causing a _dependency conflict_. Congratulations! You can troubleshoot this dependency conflict using the guide later if you'd like—usually you just have to provide a version constraint that fits within the conflict's restrictions, e.g. `composer require squizlabs/php_codesniffer:^2.8.1 --dev`.
 
 > **Note**: If you added Drupal VM to your project earlier, you'll notice it is also in the `require-dev` section, since it was required with the `--dev` flag.
 
