@@ -11,13 +11,13 @@ This hands-on guide to using Composer with Drupal was originally created for the
 
 To run the example code in this hands-on guide, you need to have **PHP 5.3.2+** installed installed on your computer. Check what version is installed with `php -v`.
 
-We strongly suggest that you use macOS or Linux OS. Windows users, please consider using [Drupal VM](https://www.drupalvm.com/).
+We strongly suggest that you use macOS or Linux. Windows users, please [use these instructions to install PHP and Composer](https://www.jeffgeerling.com/blog/2018/installing-php-7-and-composer-on-windows-10), and also install and use [Cmder](http://cmder.net) instead of PowerShell when running commands.
 
 ## Install Composer
 
 Follow the instructions below, or follow the [Composer installation instructions](https://getcomposer.org/doc/00-intro.md#system-requirements) and return here when you’re finished.
 
-If you’re a [Homebrew](https://brew.sh) user on macOS, you can use `brew install composer`. Otherwise, execute the following on your command line:
+If you’re a [Homebrew](https://brew.sh) user on macOS, you can use `brew install composer`. If you're on Windows, you can use the Windows installer. Otherwise, execute the following on your command line:
 
 ```
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -192,6 +192,8 @@ Once your codebase is complete, it's a good idea to install some of the Drupal m
 >   1. Add a copy of Drupal VM to your project: `composer require --dev geerlingguy/drupal-vm-docker`
 >   1. Run the local environment: `docker-compose up -d`
 >   1. Access http://localhost/, and you should be able to install your new Drupal site (use database name, username, password of `drupal`)!
+> 
+> **Note**: On Windows, if you get an error like `(Client.Timeout exceeded while awaiting headers)` when running `docker-compose up -d`, go to the Docker Settings, then the Network section, and under 'DNS Server', select 'Fixed' with the `8.8.8.8` server, then click Apply. Once Docker restarts, try running the command again.
 
 ## Require and update Drupal dependencies
 
@@ -247,19 +249,25 @@ After Composer is finished adding PHP CodeSniffer, look inside `composer.json`; 
     },
 ```
 
-> Warning: You might have gotten the message `Your requirements could not be resolved to an installable set of packages.` when you run this command, and Composer might have errored and reverted `composer.json` to its original content. If this happened, it's likely due to some other package (usually `drupal/coder`) causing a _dependency conflict_. Congratulations! You can troubleshoot this dependency conflict using the guide later if you'd like—usually you just have to provide a version constraint that fits within the conflict's restrictions, e.g. `composer require squizlabs/php_codesniffer:^2.8 --dev`.
+> **Warning**: You might have gotten the message `Your requirements could not be resolved to an installable set of packages.` when you run this command, and Composer might have errored and reverted `composer.json` to its original content. If this happened, it's likely due to some other package (usually `drupal/coder`) causing a _dependency conflict_. Congratulations! You can troubleshoot this dependency conflict using the guide later if you'd like—usually you just have to provide a version constraint that fits within the conflict's restrictions, e.g. `composer require squizlabs/php_codesniffer:^2.8.1 --dev`.
 
-> Note: If you added Drupal VM to your project earlier, you'll notice it is also in the `require-dev` section, since it was required with the `--dev` flag.
+> **Note**: If you added Drupal VM to your project earlier, you'll notice it is also in the `require-dev` section, since it was required with the `--dev` flag.
 
 At this point, you can use PHP CodeSniffer to test some code against the Drupal coding standards:
 
   1. Register the Drupal coder module's Drupal coding standards with `phpcs`:
 
-       ./vendor/bin/phpcs --config-set installed_paths ../../drupal/coder/coder_sniffer
+     ```
+     ./vendor/bin/phpcs --config-set installed_paths ../../drupal/coder/coder_sniffer
+     ```
 
   1. Sniff the Token module code, which we added to our codebase earlier:
 
-       ./vendor/bin/phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md ./web/modules/contrib/token
+     ```
+     ./vendor/bin/phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md ./web/modules/contrib/token
+     ```
+
+> **Note**: On Windows, use the path `vendor\bin\phpcs` (note the backslashes) instead, otherwise you'll get an error message like `'vendor' is not recognized as an internal or external command, operable program or batch file.`
 
 Once PHP CodeSniffer is finished, you should see a report of all the errors found throughout the module. Development tools like PHP CodeSniffer can be very useful in evaluating code quality and fixing problems before you commit them to your codebase!
 
@@ -280,7 +288,9 @@ This project already includes a few popular Drupal development binaries, for exa
 ./vendor/bin/phpcs -h
 ```
 
-> Note: To make it easier to run these binaries, you can add the `vendor/bin` directory to your system path. Read more about [Vendor binaries](https://getcomposer.org/doc/articles/vendor-binaries.md) in the Composer documentation.
+> **Note**: On Windows, use the path `vendor\bin\[name of binary]` (note the backslashes) instead, otherwise you'll get an error message like `'vendor' is not recognized as an internal or external command, operable program or batch file.`
+
+> **Note**: To make it easier to run these binaries, you can add the `vendor/bin` directory to your system path. Read more about [Vendor binaries](https://getcomposer.org/doc/articles/vendor-binaries.md) in the Composer documentation.
 
 ## Update Drupal core
 
@@ -333,7 +343,7 @@ You can add patches in the `extra` section of your project's `composer.json` fil
 
 Whenever you install or update `drupal/core`, the patch from [comment #130 in Drupal.org issue #2752961](https://www.drupal.org/project/drupal/issues/2752961#comment-12496589) will automatically be applied. And if you're updating Drupal, and the patch no longer applies, the `composer-patches` library will warn you so you can go back to that Drupal.org issue and look for a newer, compatible version of the patch.
 
-> Warning: Even though the `composer-patches` library makes patching easier, you should still use approach patches with caution; a general rule of thumb is to only patch something if it's mission-critical, if you understand everything the patch is doing, and if there's a good chance the patch will be maintained and eventually included in the project so you don't have to use the patch anymore!
+> **Warning**: Even though the `composer-patches` library makes patching easier, you should still use approach patches with caution; a general rule of thumb is to only patch something if it's mission-critical, if you understand everything the patch is doing, and if there's a good chance the patch will be maintained and eventually included in the project so you don't have to use the patch anymore!
 
 ## Advanced usage
 
