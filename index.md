@@ -9,15 +9,15 @@ This hands-on guide to using Composer with Drupal was originally created for the
 
 ## Check System Requirements
 
-* PHP 5.3.2+
+To run the example code in this hands-on guide, you need to have **PHP 5.3.2+** installed installed on your computer. Check what version is installed with `php -v`.
 
-We strongly suggest that you use OSX or Linux OS. Windows users, please consider using [Drupal VM](https://www.drupalvm.com/).
+We strongly suggest that you use macOS or Linux OS. Windows users, please consider using [Drupal VM](https://www.drupalvm.com/).
 
 ## Install Composer
 
 Follow the instructions below, or follow the [Composer installation instructions](https://getcomposer.org/doc/00-intro.md#system-requirements) and return here when you’re finished.
 
-If you’re a [Homebrew](https://brew.sh) user on OSX, you can use `brew install composer`. Otherwise, execute the following on your command line:
+If you’re a [Homebrew](https://brew.sh) user on macOS, you can use `brew install composer`. Otherwise, execute the following on your command line:
 
 ```
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -265,32 +265,79 @@ Once PHP CodeSniffer is finished, you should see a report of all the errors foun
 
 ## Execute project binaries
 
+Many development tools, like PHP CodeSniffer, add 'binaries' to your project. Binaries are small executable programs you can run to do certain things. By default, these binaries are stored inside `vendor/bin` inside your project.
+
+This project already includes a few popular Drupal development binaries, for example:
+
 ```
+# Run Drush commands with the `drush` binary:
 ./vendor/bin/drush status
-./vendor/bin/drupal
-./vendor/bin/phpcs
+
+# Run Drupal Console commands with the `drupal` binary:
+./vendor/bin/drupal about
+
+# Run PHP CodeSniffer with the `phpcs` binary:
+./vendor/bin/phpcs -h
 ```
 
-## Update core to dev version
+> Note: To make it easier to run these binaries, you can add the `vendor/bin` directory to your system path. Read more about [Vendor binaries](https://getcomposer.org/doc/articles/vendor-binaries.md) in the Composer documentation.
+
+## Update Drupal core
+
+If you built your project with the Drupal Composer Project, you can update Drupal core to the latest stable version with the following command, taken directly from the Drupal Composer Project documentation on [Updating Drupal Core](https://github.com/drupal-composer/drupal-project#updating-drupal-core):
+
+```
+composer update drupal/core webflo/drupal-core-require-dev symfony/* --with-dependencies
+```
+
+But in our case, we might want to **update our codebase to the latest Drupal core development release**, so we can test a patch at a code sprint, or work on some code to test it with Drupal's latest version.
+
+To do this with your project, you'll first need to remove the `webflo/drupal-core-require-dev` package, because it locks Drupal core into a stable release version.
+
+So first, remove the package with:
+
+```
+composer remove webflo/drupal-core-require-dev --dev
+```
+
+(Note that this will also remove any other dependencies that package required which are not required by any other project dependencies.)
+
+Then we can update `drupal/core` to the latest development release:
 
 ```
 composer require drupal/core:8.6.x-dev
 ```
 
+After a minute or two, your codebase should be running Drupal 8.6.x-dev. You can verify this in one of two ways:
+
+  1. Run `composer info drupal/core`, and check the `versions` that Composer lists. It should list `* 8.6.x-dev`.
+  1. Go to the Status report on the Drupal site in your browser (under Admin > Reports), and verify the 'Drupal Version' under General System Information. It should show `8.6.0-dev`.
+
 ## Patch something!
 
+Have you ever heard the _Golden Rule of Drupal Development_, "[Every time you hack core God kills a kitten](https://www.flickr.com/photos/hagengraf/2802915470)"?
+
+Well, with Composer, we can actually bend that rule a little, because we can manage Drupal core and contributed project patches very safely and easily, with the help of the [`cweagans/composer-patches`](https://github.com/cweagans/composer-patches) library. Gone are the days of keeping a folder of random patch files that have to be manually applied with the `patch` command line utility every time you update something—and accidentally forgetting to apply a patch, thus breaking your production website!
+
+You can add patches in the `extra` section of your project's `composer.json` file, like so:
+
 ```
-"extra" {
-    "patches": {
-      "drupal/core": {
-        "Clear Twig caches on deploys": "https://www.drupal.org/files/issues/2752961-130.patch"
-      }
-}
+    "extra" {
+        "patches": {
+            "drupal/core": {
+              "Clear Twig caches on deploys": "https://www.drupal.org/files/issues/2752961-130.patch"
+            }
+        }
+    }
 ```
 
-## Update Drupal Core
+Whenever you install or update `drupal/core`, the patch from [comment #130 in Drupal.org issue #2752961](https://www.drupal.org/project/drupal/issues/2752961#comment-12496589) will automatically be applied. And if you're updating Drupal, and the patch no longer applies, the `composer-patches` library will warn you so you can go back to that Drupal.org issue and look for a newer, compatible version of the patch.
 
-Execute:
-```
-composer update drupal/core
-```
+> Warning: Even though the `composer-patches` library makes patching easier, you should still use approach patches with caution; a general rule of thumb is to only patch something if it's mission-critical, if you understand everything the patch is doing, and if there's a good chance the patch will be maintained and eventually included in the project so you don't have to use the patch anymore!
+
+## Advanced usage
+
+There are other advanced ways to use Composer to manage your codebase you can attempt if you have time:
+
+  1. Adding a third party Node.js library using [Asset Packagist](https://asset-packagist.org). See a [helpful guide here](https://github.com/drupal-composer/drupal-project/issues/278#issuecomment-310141272).
+  1. Speed up Composer package installation by requiring the [`hirak/prestissimo`](https://github.com/hirak/prestissimo) Composer plugin.
