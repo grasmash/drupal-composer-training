@@ -345,6 +345,75 @@ Whenever you install or update `drupal/core`, the patch from [comment #130 in Dr
 
 > **Warning**: Even though the `composer-patches` library makes patching easier, you should still use approach patches with caution; a general rule of thumb is to only patch something if it's mission-critical, if you understand everything the patch is doing, and if there's a good chance the patch will be maintained and eventually included in the project so you don't have to use the patch anymore!
 
+## Check into Git
+
+Once you create your Drupal project's codebase, it's a good idea to start tracking the codebase in version control using Git, so you can have a history of changes to your site, and also so you can go back to a safe state if you accidentally break something!
+
+Composer's documentation recommends storing your `composer.lock` file in Git, but _not_ storing the `vendor` directory. Luckily, the Drupal Composer Project creates a `.gitignore` file that uses all the best defaults for your project, so to get started with managing your codebase in Git, create a repository, then commit everything as it is in an initial commit:
+
+```
+git init
+git add -A
+git commit -m "Initial commit of my-project."
+```
+
+At this point, you should have all the files that are necessary to replicate your Drupal site codebase in a new Git repository, stored locally on your computer, in the `master` branch.
+
+### Create a 'build' and deploy to cloud hosting
+
+Now, what happens when you want to put your Drupal site on cloud hosting somewhere, like Pantheon, Acquia, or some other provider? If you look at what's actually stored in Git, there's no `vendor` folder. There also aren't any contributed modules or other bits and pieces that Composer installs when you run `composer install`.
+
+Your Drupal project won't run very well without these things!
+
+So, when you want to deploy your project to a production environment, you need to 'build' the codebase specifically for production. One of the best advantages to doing this (as opposed to just committing everything you have locally) is that you can:
+
+  - Exclude `require-dev` dependencies (which can introduce security and performance risks if available in production).
+  - Remove pesky metadata that's not needed in production (e.g. `.git` folders for dependencies).
+  - Add other build commands to do things like optimize images, compile CSS, and more! (That's a more advanced topic for another day).
+
+Before we can deploy the project, we need to _build_ it for production use, specifically. And to do that, we'll create a separate but parallel `master-build` branch:
+
+```
+git checkout -b master-build
+```
+
+Now that we're on this branch, we can use Composer and other commands to clean up the 'build artifact' that we want to eventually deploy to our production environment:
+
+```
+composer install --no-dev --optimize-autoloader --prefer-dist
+```
+
+When you run this command, you might notice Composer _removes_ a bunch of dependencies. This is a good thing—all of those dependencies are only needed when doing local development. Once you switch back to your `master` branch and want to do development work again, you can go ahead and run `composer install` without all these options and it will reinstall your `require-dev` dependencies.
+
+Next up, we should remove all the unneeded Git repositories that may exist in some dependencies which are installed directly from GitHub:
+
+```
+find 'vendor' -type d | grep '\.git' | xargs rm -rf
+find 'web' -type d | grep '\.git' | xargs rm -rf
+```
+
+Now, we will _forcefully_ add the directories and files required to run our Drupal site, even though they are in the `.gitignore` file, since we will need them in the production environment on the `master-build` branch:
+
+```
+git add -f 'web/core'
+git add -f 'web/modules/contrib'
+git add -f 'web/themes/contrib'
+git add -f 'web/profiles/contrib'
+git add -f 'web/libraries'
+git add -f 'vendor'
+```
+
+At this point, if you run `git status`, you'll see a large number of new files ready to be added. Go ahead and add them, and then make a commit to the `master-build` branch:
+
+```
+git add -A
+git commit -m "Production build artifact for 1.0.0 release."
+```
+
+At this point, the `master-build` branch can be safely deployed to any cloud hosting environment.
+
+> **Note**: For some web hosts, e.g. Pantheon, you might need to add some extra configuration (e.g. add `web_docroot: true` to your `pantheon.yml` file) to tell the web host that the Drupal codebase files are inside the `web/` subdirectory.
+
 ## Advanced usage
 
 There are other advanced ways to use Composer to manage your codebase you can attempt if you have time:
