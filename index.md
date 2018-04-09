@@ -267,6 +267,8 @@ At this point, you can use PHP CodeSniffer to test some code against the Drupal 
      ./vendor/bin/phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md ./web/modules/contrib/token
      ```
 
+> **Note**: On Windows, use the path `vendor\bin\phpcs` (note the backslashes) instead, otherwise you'll get an error message like `'vendor' is not recognized as an internal or external command, operable program or batch file.`
+
 Once PHP CodeSniffer is finished, you should see a report of all the errors found throughout the module. Development tools like PHP CodeSniffer can be very useful in evaluating code quality and fixing problems before you commit them to your codebase!
 
 ## Execute project binaries
@@ -285,6 +287,8 @@ This project already includes a few popular Drupal development binaries, for exa
 # Run PHP CodeSniffer with the `phpcs` binary:
 ./vendor/bin/phpcs -h
 ```
+
+> **Note**: On Windows, use the path `vendor\bin\[name of binary]` (note the backslashes) instead, otherwise you'll get an error message like `'vendor' is not recognized as an internal or external command, operable program or batch file.`
 
 > **Note**: To make it easier to run these binaries, you can add the `vendor/bin` directory to your system path. Read more about [Vendor binaries](https://getcomposer.org/doc/articles/vendor-binaries.md) in the Composer documentation.
 
