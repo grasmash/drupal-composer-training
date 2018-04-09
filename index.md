@@ -193,7 +193,7 @@ Once your codebase is complete, it's a good idea to install some of the Drupal m
 >   1. Run the local environment: `docker-compose up -d`
 >   1. Access http://localhost/, and you should be able to install your new Drupal site (use database name, username, password of `drupal`)!
 > 
-> Note: On Windows, if you get an error like `(Client.Timeout exceeded while awaiting headers)` when running `docker-compose up -d`, go to the Docker Settings, then the Network section, and under 'DNS Server', select 'Fixed' with the `8.8.8.8` server, then click Apply. Once Docker restarts, try running the command again.
+> **Note**: On Windows, if you get an error like `(Client.Timeout exceeded while awaiting headers)` when running `docker-compose up -d`, go to the Docker Settings, then the Network section, and under 'DNS Server', select 'Fixed' with the `8.8.8.8` server, then click Apply. Once Docker restarts, try running the command again.
 
 ## Require and update Drupal dependencies
 
@@ -249,19 +249,23 @@ After Composer is finished adding PHP CodeSniffer, look inside `composer.json`; 
     },
 ```
 
-> Warning: You might have gotten the message `Your requirements could not be resolved to an installable set of packages.` when you run this command, and Composer might have errored and reverted `composer.json` to its original content. If this happened, it's likely due to some other package (usually `drupal/coder`) causing a _dependency conflict_. Congratulations! You can troubleshoot this dependency conflict using the guide later if you'd like—usually you just have to provide a version constraint that fits within the conflict's restrictions, e.g. `composer require squizlabs/php_codesniffer:^2.8 --dev`.
+> **Warning**: You might have gotten the message `Your requirements could not be resolved to an installable set of packages.` when you run this command, and Composer might have errored and reverted `composer.json` to its original content. If this happened, it's likely due to some other package (usually `drupal/coder`) causing a _dependency conflict_. Congratulations! You can troubleshoot this dependency conflict using the guide later if you'd like—usually you just have to provide a version constraint that fits within the conflict's restrictions, e.g. `composer require squizlabs/php_codesniffer:^2.8 --dev`.
 
-> Note: If you added Drupal VM to your project earlier, you'll notice it is also in the `require-dev` section, since it was required with the `--dev` flag.
+> **Note**: If you added Drupal VM to your project earlier, you'll notice it is also in the `require-dev` section, since it was required with the `--dev` flag.
 
 At this point, you can use PHP CodeSniffer to test some code against the Drupal coding standards:
 
   1. Register the Drupal coder module's Drupal coding standards with `phpcs`:
 
-       ./vendor/bin/phpcs --config-set installed_paths ../../drupal/coder/coder_sniffer
+     ```
+     ./vendor/bin/phpcs --config-set installed_paths ../../drupal/coder/coder_sniffer
+     ```
 
   1. Sniff the Token module code, which we added to our codebase earlier:
 
-       ./vendor/bin/phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md ./web/modules/contrib/token
+     ```
+     ./vendor/bin/phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md ./web/modules/contrib/token
+     ```
 
 Once PHP CodeSniffer is finished, you should see a report of all the errors found throughout the module. Development tools like PHP CodeSniffer can be very useful in evaluating code quality and fixing problems before you commit them to your codebase!
 
@@ -282,7 +286,7 @@ This project already includes a few popular Drupal development binaries, for exa
 ./vendor/bin/phpcs -h
 ```
 
-> Note: To make it easier to run these binaries, you can add the `vendor/bin` directory to your system path. Read more about [Vendor binaries](https://getcomposer.org/doc/articles/vendor-binaries.md) in the Composer documentation.
+> **Note**: To make it easier to run these binaries, you can add the `vendor/bin` directory to your system path. Read more about [Vendor binaries](https://getcomposer.org/doc/articles/vendor-binaries.md) in the Composer documentation.
 
 ## Update Drupal core
 
@@ -335,7 +339,7 @@ You can add patches in the `extra` section of your project's `composer.json` fil
 
 Whenever you install or update `drupal/core`, the patch from [comment #130 in Drupal.org issue #2752961](https://www.drupal.org/project/drupal/issues/2752961#comment-12496589) will automatically be applied. And if you're updating Drupal, and the patch no longer applies, the `composer-patches` library will warn you so you can go back to that Drupal.org issue and look for a newer, compatible version of the patch.
 
-> Warning: Even though the `composer-patches` library makes patching easier, you should still use approach patches with caution; a general rule of thumb is to only patch something if it's mission-critical, if you understand everything the patch is doing, and if there's a good chance the patch will be maintained and eventually included in the project so you don't have to use the patch anymore!
+> **Warning**: Even though the `composer-patches` library makes patching easier, you should still use approach patches with caution; a general rule of thumb is to only patch something if it's mission-critical, if you understand everything the patch is doing, and if there's a good chance the patch will be maintained and eventually included in the project so you don't have to use the patch anymore!
 
 ## Advanced usage
 
