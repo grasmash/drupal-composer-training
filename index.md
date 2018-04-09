@@ -4,7 +4,7 @@ This hands-on guide to using Composer with Drupal was originally created for the
 
 {:.no_toc}
 
-* TOC
+1. TOC
 {:toc}
 
 ## Check System Requirements
