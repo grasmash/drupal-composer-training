@@ -11,7 +11,7 @@ This hands-on guide to using Composer with Drupal was originally created for the
 
 To run the example code in this hands-on guide, you need to have **PHP 5.3.2+** installed installed on your computer. Check what version is installed with `php -v`.
 
-We strongly suggest that you use macOS or Linux OS. Windows users, please consider using [Drupal VM](https://www.drupalvm.com/).
+We strongly suggest that you use macOS or Linux. Windows users, please [use these instructions to install PHP and Composer](https://www.jeffgeerling.com/blog/2018/installing-php-7-and-composer-on-windows-10), and also install and use [Cmder](http://cmder.net) instead of PowerShell when running commands.
 
 ## Install Composer
 
@@ -192,6 +192,8 @@ Once your codebase is complete, it's a good idea to install some of the Drupal m
 >   1. Add a copy of Drupal VM to your project: `composer require --dev geerlingguy/drupal-vm-docker`
 >   1. Run the local environment: `docker-compose up -d`
 >   1. Access http://localhost/, and you should be able to install your new Drupal site (use database name, username, password of `drupal`)!
+> 
+> Note: On Windows, if you get an error like `(Client.Timeout exceeded while awaiting headers)` when running `docker-compose up -d`, go to the Docker Settings, then the Network section, and under 'DNS Server', select 'Fixed' with the `8.8.8.8` server, then click Apply. Once Docker restarts, try running the command again.
 
 ## Require and update Drupal dependencies
 
