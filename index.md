@@ -57,6 +57,7 @@ composer init
 
 And you will be prompted for a few settings for your new project:
 
+  - Enter a package name, like `yourusername/my-new-project`
   - Enter a description like 'Test project at DrupalCon'
   - Enter `project` for Package Type.
   - Use defaults (hit enter when prompted) for everything else.
