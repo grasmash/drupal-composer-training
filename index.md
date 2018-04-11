@@ -9,7 +9,7 @@ This hands-on guide to using Composer with Drupal was originally created for the
 
 ## Check System Requirements
 
-To run the example code in this hands-on guide, you need to have **PHP 5.3.2+** installed installed on your computer. Check what version is installed with `php -v`.
+To run the example code in this hands-on guide, you need to have **PHP 5.6+** installed installed on your computer. Check what version is installed with `php -v`.
 
 We strongly suggest that you use macOS or Linux. Windows users, please [use these instructions to install PHP and Composer](https://www.jeffgeerling.com/blog/2018/installing-php-7-and-composer-on-windows-10), and also install and use [Cmder](http://cmder.net) instead of PowerShell when running commands.
 
@@ -178,6 +178,11 @@ Following the directions from that project's README, create a new Drupal project
 
 ```
 composer create-project drupal-composer/drupal-project:8.x-dev my-project --stability dev --no-interaction
+```
+
+Then change directories into the project folder that was just created:
+
+```
 cd my-project
 ```
 
