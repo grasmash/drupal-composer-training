@@ -17,7 +17,7 @@ We strongly suggest that you use macOS or Linux. Windows users, please [use thes
 
 Follow the instructions below, or follow the [Composer installation instructions](https://getcomposer.org/doc/00-intro.md#system-requirements) and return here when you’re finished.
 
-If you’re a [Homebrew](https://brew.sh) user on macOS, you can use `brew install composer`. If you're on Windows, you can use the Windows installer. Otherwise, execute the following on your command line:
+If you’re a [Homebrew](https://brew.sh) user on macOS, you can use `brew install composer`. If you're on Windows, you can use the [Windows installer](https://getcomposer.org/doc/00-intro.md#installation-windows). Otherwise, execute the following on your command line:
 
 ```
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
